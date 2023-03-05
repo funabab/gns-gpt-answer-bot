@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { join } from 'node:path';
 import { QuestionModule } from './question/question.module';
 import { APP_PIPE } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+import { OpenaiService } from './openai/openai.service';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { APP_PIPE } from '@nestjs/core';
         fallthrough: false,
       },
     }),
+    ConfigModule.forRoot(),
     QuestionModule,
   ],
   controllers: [AppController],
@@ -22,6 +25,7 @@ import { APP_PIPE } from '@nestjs/core';
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
+    OpenaiService,
   ],
 })
 export class AppModule {}
