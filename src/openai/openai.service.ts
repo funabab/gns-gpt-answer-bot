@@ -28,6 +28,6 @@ export class OpenaiService extends OpenAIApi {
 
     return response.data.choices[0].message.content
       .replace(/[^a-zA-Z0-9]/g, '')
-      .toLowerCase();
+      .toLowerCase()[0];
   }
 }
