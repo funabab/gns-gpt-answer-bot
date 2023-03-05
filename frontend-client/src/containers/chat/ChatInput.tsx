@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FaSpinner } from 'react-icons/fa'
 
 interface Props {
   onSubmit?: (question: string) => void
@@ -20,14 +21,15 @@ const ChatInput: React.FC<Props> = ({ onSubmit, isLoading }) => {
       ></textarea>
       <div className="px-1 mt-1">
         <button
-          className="bg-green-900 block text-white p-4 rounded hover:enabled:bg-green-900/80 transition font-bold w-full disabled:opacity-20"
+          className="bg-green-900 text-white p-4 rounded hover:enabled:bg-green-900/80 transition justify-center font-bold w-full disabled:opacity-70 flex items-center gap-x-2"
           onClick={() => {
             onSubmit?.(input)
             setInput('')
           }}
           disabled={isLoading}
         >
-          Get Answer
+          <span>Get Answer</span>
+          {isLoading && <FaSpinner className="animate-spin" />}
         </button>
       </div>
     </div>
