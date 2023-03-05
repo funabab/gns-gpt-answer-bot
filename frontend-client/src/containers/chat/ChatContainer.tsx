@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useQuestionAnswerQuestionQuery } from '../../api/question'
 import { QuestionProps } from '../../typings'
 import { parseQuestionContent } from '../../utils/question'
 import ChatContent from './ChatContent'
@@ -10,10 +11,15 @@ interface Props {}
 const ChatContainer: React.FC<Props> = () => {
   const [contents, setContents] = useState<QuestionProps[]>([])
   const contentContainerRef = useRef<HTMLDivElement>(null)
+  const {
+    isLoading: isAnswerLoading,
+    data: answerResponse,
+    getAnswer,
+  } = useQuestionAnswerQuestionQuery()
 
   const handleInputSubmit = useCallback((question: string) => {
     try {
-      setContents((content) => [...content, parseQuestionContent(question)])
+      getAnswer({ question })
     } catch (e) {
       console.error(e)
     }
@@ -25,6 +31,19 @@ const ChatContainer: React.FC<Props> = () => {
       behavior: 'smooth',
     })
   }, [contents])
+
+  useEffect(() => {
+    if (answerResponse) {
+      try {
+        setContents((content) => [
+          ...content,
+          parseQuestionContent(answerResponse.question, answerResponse.answer),
+        ])
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }, [answerResponse])
 
   return (
     <div className="bg-black w-full h-full">
@@ -39,7 +58,7 @@ const ChatContainer: React.FC<Props> = () => {
               <ChatContent key={index} question={content} />
             ))}
           </div>
-          <ChatInput onSubmit={handleInputSubmit} />
+          <ChatInput onSubmit={handleInputSubmit} isLoading={isAnswerLoading} />
         </main>
       </div>
     </div>

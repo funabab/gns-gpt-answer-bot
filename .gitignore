@@ -3,6 +3,7 @@
 /node_modules
 
 # Logs
+.vscode
 logs
 *.log
 npm-debug.log*
