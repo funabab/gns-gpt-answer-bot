@@ -9,6 +9,7 @@
     "build": "nest build",
     "build:frontend": "npm run build --prefix frontend-client",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "postinstall": "npm i --prefix frontend-client",
     "start": "npm run build:frontend && nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
