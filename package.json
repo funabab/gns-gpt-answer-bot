@@ -4,7 +4,7 @@
   "description": "",
   "author": "Abdulbassit Abdullahi Funsho (funabab)",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "build:frontend": "npm run build --prefix frontend-client",
